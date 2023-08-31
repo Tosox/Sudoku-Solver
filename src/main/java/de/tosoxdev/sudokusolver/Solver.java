@@ -4,18 +4,25 @@ import de.tosoxdev.sudokusolver.core.Sudoku;
 
 public class Solver {
     public static void solve(Sudoku sudoku) {
-        solve(sudoku, 0);
+        int[][] sudokuByReference = new int[sudoku.getSize()][sudoku.getSize()];
+        solve(sudoku, 0, sudokuByReference);
+        sudoku = new Sudoku(sudokuByReference);
+
+        System.out.println("Possible solution:");
+        System.out.println(sudoku);
     }
 
-    private static void solve(Sudoku sudoku, int tile) {
+    private static void solve(Sudoku sudoku, int tile, int[][] solvedSudokuOut) {
         int size = sudoku.getSize();
         int row = tile / size;
         int column = tile % size;
 
         // End of recursive loop
         if (row == size) {
-            System.out.println("Possible solution:");
-            System.out.println(sudoku);
+            int[][] solvedSudoku = sudoku.toArray();
+            for (int i = 0; i < sudoku.getSize(); i++) {
+                System.arraycopy(solvedSudoku[i], 0, solvedSudokuOut[i], 0, sudoku.getSize());
+            }
             return;
         }
 
@@ -24,12 +31,12 @@ public class Solver {
             for (int number = 1; number <= size; number++) {
                 if (isTileValid(sudoku, row, column, number)) {
                     sudoku.getTileAt(row, column).setNumber(number);
-                    solve(sudoku, tile + 1);
+                    solve(sudoku, tile + 1, solvedSudokuOut);
                     sudoku.getTileAt(row, column).clear();
                 }
             }
         } else {
-            solve(sudoku, tile + 1);
+            solve(sudoku, tile + 1, solvedSudokuOut);
         }
     }
 
