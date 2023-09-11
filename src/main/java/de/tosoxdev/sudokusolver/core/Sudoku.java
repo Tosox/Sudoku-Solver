@@ -10,16 +10,6 @@ public class Sudoku {
         fill(grid);
     }
 
-    public int[][] toArray() {
-        int[][] array = new int[board.length][board.length];
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board.length; j++) {
-                array[i][j] = board[i][j].getNumber();
-            }
-        }
-        return array;
-    }
-
     public int getSize() {
         return size;
     }
