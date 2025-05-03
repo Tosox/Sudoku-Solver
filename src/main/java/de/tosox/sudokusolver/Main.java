@@ -1,6 +1,6 @@
-package de.tosoxdev.sudokusolver;
+package de.tosox.sudokusolver;
 
-import de.tosoxdev.sudokusolver.core.Sudoku;
+import de.tosox.sudokusolver.core.Sudoku;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,6 +19,13 @@ public class Main {
         System.out.println("Input Sudoku:");
         System.out.println(sudoku);
 
-        Solver.solve(sudoku);
+        Sudoku solvedSudoku = Solver.solve(sudoku);
+        if (solvedSudoku == null) {
+            System.out.println("No solution for the given Sudoku found");
+            return;
+        }
+
+        System.out.println("Solved Sudoku:");
+        System.out.println(solvedSudoku);
     }
 }

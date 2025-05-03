@@ -1,22 +1,20 @@
-package de.tosoxdev.sudokusolver;
+package de.tosox.sudokusolver;
 
-import de.tosoxdev.sudokusolver.core.Sudoku;
+import de.tosox.sudokusolver.core.Sudoku;
 
 public class Solver {
-    public static void solve(Sudoku sudoku) {
-        solve(sudoku, 0);
+    public static Sudoku solve(Sudoku sudoku) {
+        return solve(sudoku, 0) ? sudoku : null;
     }
 
-    private static void solve(Sudoku sudoku, int tile) {
+    private static boolean solve(Sudoku sudoku, int tile) {
         int size = sudoku.getSize();
         int row = tile / size;
         int column = tile % size;
 
         // End of recursive loop
         if (row == size) {
-            System.out.println("Possible solution:");
-            System.out.println(sudoku);
-            return;
+            return true;
         }
 
         // Solve sudoku recursively
@@ -24,12 +22,18 @@ public class Solver {
             for (int number = 1; number <= size; number++) {
                 if (isTileValid(sudoku, row, column, number)) {
                     sudoku.getTileAt(row, column).setNumber(number);
-                    solve(sudoku, tile + 1);
+                    if (solve(sudoku, tile + 1)) {
+                        // Solution found, bubble up
+                        return true;
+                    }
                     sudoku.getTileAt(row, column).clear();
                 }
             }
+            // No valid number found
+            return false;
         } else {
-            solve(sudoku, tile + 1);
+            // Tile already filled, move on
+            return solve(sudoku, tile + 1);
         }
     }
 
