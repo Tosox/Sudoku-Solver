@@ -1,4 +1,4 @@
-package de.tosoxdev.sudokusolver.core;
+package de.tosox.sudokusolver.core;
 
 public class Tile {
     private static final int EMPTY = 0;

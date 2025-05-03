@@ -1,4 +1,4 @@
-package de.tosoxdev.sudokusolver;
+package de.tosox.sudokusolver;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
